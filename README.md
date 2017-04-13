@@ -4,7 +4,7 @@ The basic algorithms:
 
 <MainEntry>
 For tweet in tweets:
-    <insertTweets&UserDB>
+     <insertTweets&UserDB>
 
 
 
