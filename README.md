@@ -1,43 +1,15 @@
 # project
-Project folder on data injection part.
-The basic algorithms:
+This is part of project on data injection from Pickle file(tweets collected from Twitter) to Mysql Database.
 
-<MainEntry>
-For tweet in tweets:
-     <insertTweets&UserDB>
+The file introduction:
 
+MainEntry.py :  loop all the instance within pickle file(50,000 each)
 
-
-<insertTweets&UserDB>
-    if (tweets.id NOT IN db.tweets):
-        if(tweets.user.id IN db.User):
-            if(db.user.updatetime IS old):
-                <UpdateUserInfo>
-            else:
-                Pass
-        else:
-            <InsertUserInfo>
-        <InsertTweets>
-    else:
-        Pass
+insertTweets2DB.py : condition statement on tweets and user table. This method will update user information if user update their profile.
 
 
-<UpdateUserInfo>/<UpdateUserInfo>
-	collect all the related variables 
-	cast to corresponding DB variables type.
-	build Insert query and execute 
+InsertUserStatement.py: conver all the related variables from tweets standard into Mysql standard;  Return corresponding insert SQL for user table.
 
 
-
-
-<UpdateTweets>
-	collect all the related variables 
-		if(tweet.retweets NOT Null):
-			<insertTweets&UserDB>
-	cast to corresponding DB variables type.
-	build Insert query and execute 
-  
-  
-  
-Ongoing changes...
+UpdateUserInfo.py & UpdateTweets.py : similar with InsertUserStatement.py, ongoing...
 
