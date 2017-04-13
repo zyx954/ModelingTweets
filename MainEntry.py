@@ -16,10 +16,10 @@ try:
     db, cursor = Connect2Db.connect_db()
     print 'lenght of this Tweets ; ' + str(len(tweets_data))
 
-    injectTweet2Mysql(tweets_data[1],db, cursor)
-    # for tweet in tweets_data:
-    #     # print "test error times, "
-    #     injectTweet2Mysql(tweet,db, cursor);
+    # injectTweet2Mysql(tweets_data[1],db, cursor)
+    for tweet in tweets_data:
+        # print "test error times, "
+        injectTweet2Mysql(tweet,db, cursor);
 
 
 except:

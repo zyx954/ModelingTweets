@@ -31,31 +31,41 @@ def injectTweet2Mysql(tweet,db, cursor):
             if(containsUser):
                 # User Info already in DB
                 # todo Start
-                tweetTimeStamp = tweet.createdTime
-                useInfoUpdataTimeInDB = cursor.execute("SELECT updatetime FROM Users where id = userIdFromTweets ;")
-                if(tweetTimeStamp < useInfoUpdataTimeInDB):
-                    # the user info in tweets is lastest info-->need to update user Info in DB
-                    UpdateUserSQL = UpdateUserSQLStr(tweet);
-                    # cursor.execute(UpdateUserSQL)
-                # todo End
-                else:
-                    #the user info in tweets is old info--> not need to update user info in DB
+                # tweetTimeStamp = tweet.createdTime
+                # useInfoUpdataTimeInDB = cursor.execute("SELECT updatetime FROM Users where id = userIdFromTweets ;")
+                # if(tweetTimeStamp < useInfoUpdataTimeInDB):
+                #     # the user info in tweets is lastest info-->need to update user Info in DB
+                #     UpdateUserSQL = UpdateUserSQLStr(tweet);
+                #     # cursor.execute(UpdateUserSQL)
+                # # todo End
+                # else:
+                #     #the user info in tweets is old info--> not need to update user info in DB
                     pass
             else:
                 #User not in the DB--> uodate  user
                 InsertUserSQL = InsertUserSQLStr(tweet);
-                # cursor.execute(InsertUserSQL)
+                result = cursor.execute(InsertUserSQL)
+                if (result == 0):
+                    print result;
+                    print InsertUserSQL;
+
+                # print result;
             #tweets not in DB -->uodate tweets
-            InsertTweetsSQL = InsertTweetsSQLStr(tweet);
+            # todo start
+            # InsertTweetsSQL = InsertTweetsSQLStr(tweet);
             # cursor.execute(InsertTweetsSQL)
+            # todo end
+            db.commit();
 
         else:
             # this tweet already in DB-->  it means this time we get this tweets frmo retweets body or the tweets in DB is updated in retweetstweet id is unique,  -- >do nothing ->next iteration.
+
             pass
     except:
     #     print args
-    #     print "$$$this is RuntimeError"
+        print "$$$this is RuntimeError"
     # pass error
+        db.rollback()
         traceback.print_exc()
 
     finally:
