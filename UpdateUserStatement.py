@@ -1,8 +1,5 @@
 import datetime
 
-
-
-
 def JointUpdateSQL(tweet,variable,ListupdateVariablesAndValues):
     updateVariablesAndValues=''
     if variable in tweet['user']:
@@ -26,7 +23,6 @@ def JointUpdateSQL(tweet,variable,ListupdateVariablesAndValues):
                 ValueType)
     else:
         pass
-    # ListupdateVariablesAndValues.append(',')
     ListupdateVariablesAndValues.append(updateVariablesAndValues)
 
 #just append the data , cause data need unique handle
@@ -56,10 +52,8 @@ def appendUpdateTime(tweet,ListupdateVariablesAndValues):
         else:
             print "@@@@@@ ERROR: There one unexpected type exist.it is : " + str(
                 updateTimeTpye)
-            # sqlVariables = sqlVariables + ',`updateTime`'
     else:
         pass
-    # ListupdateVariablesAndValues.append(',')
     ListupdateVariablesAndValues.append(updateVariablesAndValues)
 
 
@@ -76,5 +70,6 @@ def UpdateUserSQLStr(tweet):
     ListupdateVariablesAndValues=filter(None,ListupdateVariablesAndValues)
     updateVariablesAndValues=','.join(ListupdateVariablesAndValues)
     finalSql = 'UPDATE  `User` SET  ' + updateVariablesAndValues + '  WHERE ' '`id`=\'' + str(tweet['user']['id']) + '\';'
+    print finalSql
     return finalSql
 
