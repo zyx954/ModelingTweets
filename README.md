@@ -10,6 +10,8 @@ insertTweets2DB.py : condition statement on tweets and user table. This method w
 
 InsertUserStatement.py: conver all the related variables from tweets standard into Mysql standard;  Return corresponding insert SQL for user table.
 
+UpdateUserInfo.py  : generate update sql language
 
-UpdateUserInfo.py & UpdateTweets.py : similar with InsertUserStatement.py, ongoing...
+
+& InsertTweets.py  ongoing...
 
