@@ -2,6 +2,8 @@ import InsertUserStatement
 import InsertTweetsStatement
 import UpdateUserStatement
 import traceback
+import datetime
+
 
 
 #inject one particulat tweet based on informaton betweetn DB and tweet
@@ -30,14 +32,20 @@ def injectTweet2Mysql(tweet,db, cursor):
             #this tweet is not in DB
             if(containsUser):
                 # User Info already in DB
-                # todo Start
-                # tweetTimeStamp = tweet.createdTime
-                # useInfoUpdataTimeInDB = cursor.execute("SELECT updatetime FROM Users where id = userIdFromTweets ;")
-                # if(tweetTimeStamp < useInfoUpdataTimeInDB):
-                #     # the user info in tweets is lastest info-->need to update user Info in DB
-                #     UpdateUserSQL = UpdateUserSQLStr(tweet);
-                #     # cursor.execute(UpdateUserSQL)
-                # # todo End
+                tweetTimeStamp = tweet['created_at']
+                tweetTimeStamp = datetime.datetime.strptime(tweetTimeStamp,"%a %b %d %H:%M:%S +0000 %Y")
+                sqlOnUpdatetime = "SELECT updateTime FROM User where id = '"+ str(tweet['user']['id']) + "';"
+                cursor.execute(sqlOnUpdatetime)
+                useInfoUpdataTimeInDB = cursor.fetchone()
+                useInfoUpdataTimeInDB = useInfoUpdataTimeInDB[0]  # dateTime type
+                print "useInfoUpdataTimeInDB is "
+                print useInfoUpdataTimeInDB
+                if(tweetTimeStamp > useInfoUpdataTimeInDB):
+                    # the user info in tweets is lastest info-->need to update user Info in DB
+                    UpdateUserSQL = UpdateUserSQLStr(tweet);
+                    print UpdateUserSQL
+                    cursor.execute(UpdateUserSQL)
+                    print "****** userinfo in DB  updated *******"
                 # else:
                 #     #the user info in tweets is old info--> not need to update user info in DB
                     pass
@@ -45,9 +53,9 @@ def injectTweet2Mysql(tweet,db, cursor):
                 #User not in the DB--> uodate  user
                 InsertUserSQL = InsertUserSQLStr(tweet);
                 result = cursor.execute(InsertUserSQL)
-                if (result == 0):
-                    print result;
-                    print InsertUserSQL;
+                # if (result == 0):
+                #     print result;
+                #     print InsertUserSQL;
 
                 # print result;
             #tweets not in DB -->uodate tweets

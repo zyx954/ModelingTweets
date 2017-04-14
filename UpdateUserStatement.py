@@ -70,6 +70,6 @@ def UpdateUserSQLStr(tweet):
     ListupdateVariablesAndValues=filter(None,ListupdateVariablesAndValues)
     updateVariablesAndValues=','.join(ListupdateVariablesAndValues)
     finalSql = 'UPDATE  `User` SET  ' + updateVariablesAndValues + '  WHERE ' '`id`=\'' + str(tweet['user']['id']) + '\';'
-    print finalSql
+    # print finalSql
     return finalSql
 
