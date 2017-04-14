@@ -13,5 +13,5 @@ InsertUserStatement.py: conver all the related variables from tweets standard in
 UpdateUserInfo.py  : generate update sql language
 
 
-& InsertTweets.py  ongoing...
+& InsertTweets.py  ongoing... 
 
