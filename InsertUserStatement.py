@@ -468,48 +468,7 @@ def InsertUserSQLStr(tweet):
         sqlVariables=sqlVariables+',`location`'
     else:
         pass
-    if 'followers' in tweet['user']:
-        followersTpye=type(tweet['user']['followers'])
-        followers = tweet['user']['followers']
-        if (followersTpye==bool):
-            if (followers==True):
-                sqlValues=sqlValues+',\'1\''
-            else:
-                sqlValues = sqlValues + ',\'0\''
-        elif(followersTpye==int):
-            sqlValues = sqlValues + ',\''+str(followers)+'\''
-        elif(followersTpye==unicode):
-            utf8string_followers = followers.encode("utf-8")
-            sqlValues = sqlValues + ',\'' + utf8string_followers + '\''
-        elif(str(followersTpye)=='<type \'NoneType\'>'):
-            sqlValues = sqlValues + ',\'none\''
-        else:
-            print "@@@@@@ ERROR: There one unexpected type exist.it is : "+ str(
-                followersTpye)
-        sqlVariables=sqlVariables+',`followers`'
-    else:
-        pass
-    if 'followees' in tweet['user']:
-        followeesTpye=type(tweet['user']['followees'])
-        followees = tweet['user']['followees']
-        if (followeesTpye==bool):
-            if (followees==True):
-                sqlValues=sqlValues+',\'1\''
-            else:
-                sqlValues = sqlValues + ',\'0\''
-        elif(followeesTpye==int):
-            sqlValues = sqlValues + ',\''+str(followees)+'\''
-        elif(followeesTpye==unicode):
-            utf8string_followees = followees.encode("utf-8")
-            sqlValues = sqlValues + ',\'' + utf8string_followees + '\''
-        elif(str(followeesTpye)=='<type \'NoneType\'>'):
-            sqlValues = sqlValues + ',\'none\''
-        else:
-            print "@@@@@@ ERROR: There one unexpected type exist.it is : "+ str(
-                followeesTpye)
-        sqlVariables=sqlVariables+',`followees`'
-    else:
-        pass
+
     #this created_at is direct to time in tweets rather than in user
     # created_at variable
     if 'created_at' in tweet:
@@ -548,7 +507,6 @@ def InsertUserSQLStr(tweet):
     # print sqlValues
 
     # finalSql =
-
     finalSql = 'INSERT INTO `User` ' + '(' + sqlVariables + ')' + ' VALUES ' + \
           '(' + sqlValues + ');'
     print finalSql
