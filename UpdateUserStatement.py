@@ -21,6 +21,7 @@ def JointUpdateSQL(tweet,variable,ListupdateVariablesAndValues):
         else:
             print "@@@@@@ ERROR: There one unexpected type exist.it is : "+ str(
                 ValueType)
+            print value
     else:
         pass
     ListupdateVariablesAndValues.append(updateVariablesAndValues)

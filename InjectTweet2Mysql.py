@@ -59,10 +59,8 @@ def injectTweet2Mysql(tweet,db, cursor):
 
                 # print result;
             #tweets not in DB -->uodate tweets
-            # todo start
-            # InsertTweetsSQL = InsertTweetsSQLStr(tweet);
-            # cursor.execute(InsertTweetsSQL)
-            # todo end
+            InsertTweetsSQL = InsertTweetsSQLStr(tweet,db,cursor);
+            cursor.execute(InsertTweetsSQL)
             db.commit();
 
         else:
