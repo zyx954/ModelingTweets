@@ -14,7 +14,7 @@ def JointUpdateSQL(tweet,variable,ListupdateVariablesAndValues):
             updateVariablesAndValues = updateVariablesAndValues + '`'+variable+'`'+'= \''+str(value)+'\''
         elif(ValueType==unicode):
             utf8string_value = value.encode("utf-8")
-            utf8string_value = utf8string_value.replace("\'", "\\\'")
+            utf8string_value = utf8string_value.replace("'", "\\\'")
             updateVariablesAndValues = updateVariablesAndValues + '`'+variable+'`'+'= \'' + utf8string_value + '\''
         elif(str(ValueType)=='<type \'NoneType\'>'):
             updateVariablesAndValues = updateVariablesAndValues + '`'+variable+'`'+'= \'none\''

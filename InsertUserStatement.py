@@ -96,8 +96,9 @@ def InsertUserSQLStr(tweet):
         elif(descriptionTpye==unicode):
             utf8string_description = description.encode("utf-8")
             # print utf8string_description
-            utf8string_description=utf8string_description.replace("\'","\\\'")
-            sqlValues = sqlValues + ',\'' + utf8string_description + '\''
+            # utf8string_description=utf8string_description.replace("'","\\\'")
+            # sqlValues = sqlValues + ',\"' + utf8string_description + '\"'
+            sqlValues = sqlValues +  ','+'%s'
         elif(str(descriptionTpye)=='<type \'NoneType\'>'):
             sqlValues = sqlValues + ',\'none\''
         else:
@@ -288,7 +289,7 @@ def InsertUserSQLStr(tweet):
             sqlValues = sqlValues + ',\''+str(name)+'\''
         elif(nameTpye==unicode):
             utf8string_name = name.encode("utf-8")
-            utf8string_name = utf8string_name.replace("\'","\\\'")
+            utf8string_name = utf8string_name.replace("'","\\\'")
             sqlValues = sqlValues + ',\'' + utf8string_name + '\''
         elif(str(nameTpye)=='<type \'NoneType\'>'):
             sqlValues = sqlValues + ',\'none\''
@@ -352,7 +353,7 @@ def InsertUserSQLStr(tweet):
             sqlValues = sqlValues + ',\''+str(screen_name)+'\''
         elif(screen_nameTpye==unicode):
             utf8string_screen_name = screen_name.encode("utf-8")
-            utf8string_screen_name=utf8string_screen_name.replace("\'","\\\'")
+            utf8string_screen_name=utf8string_screen_name.replace("'","\\\'")
             sqlValues = sqlValues + ',\'' + utf8string_screen_name + '\''
         elif(str(screen_nameTpye)=='<type \'NoneType\'>'):
             sqlValues = sqlValues + ',\'none\''
@@ -458,7 +459,7 @@ def InsertUserSQLStr(tweet):
             sqlValues = sqlValues + ',\''+str(location)+'\''
         elif(locationTpye==unicode):
             utf8string_location = location.encode("utf-8")
-            utf8string_location=utf8string_location.replace("\'","\\\'")
+            utf8string_location=utf8string_location.replace("'","\\\'")
             sqlValues = sqlValues + ',\'' + utf8string_location + '\''
         elif(str(locationTpye)=='<type \'NoneType\'>'):
             sqlValues = sqlValues + ',\'none\''
@@ -507,7 +508,7 @@ def InsertUserSQLStr(tweet):
     # print sqlValues
 
     # finalSql =
-    finalSql = 'INSERT INTO `User` ' + '(' + sqlVariables + ')' + ' VALUES ' + \
-          '(' + sqlValues + ');'
-    # print finalSql
+    finalSql = '"""INSERT INTO `User` ' + '(' + sqlVariables + ')' + ' VALUES ' + \
+          '(' + sqlValues + ')"""'
+    print finalSql
     return finalSql

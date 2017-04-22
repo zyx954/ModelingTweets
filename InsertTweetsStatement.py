@@ -26,8 +26,8 @@ def jointInsertTweetVarAndValue(tweet,variable,sqlVariables,sqlValues):
         elif (tpye_ == unicode):
             utf8string_value = value.encode("utf-8")
             # replease the possible single quotes to \'
-            utf8string_value = utf8string_value.replace("\'", "\\\'")
-            sqlValuesStr='\'' + utf8string_value + '\''
+            # utf8string_value = utf8string_value.replace("'", "\\\'")
+            sqlValuesStr='\"' + utf8string_value + '\"'
             sqlValues.append(sqlValuesStr)
         elif (str(tpye_) == '<type \'NoneType\'>'):
             sqlValuesStr = '\' None\''
@@ -163,14 +163,14 @@ def appendRetweetedAndQutedStatus(tweet, sqlVariables, sqlValues,db,cursor):
     injectTweet2Mysql = InjectTweet2Mysql.injectTweet2Mysql
     if('quoted_status' in tweet):
         if (str(type(tweet['quoted_status'])) != '<type \'NoneType\'>'):
-            sqlValuesStr = '\'1\''
+            sqlValuesStr = 1
             appendValuseAndVariablse('`quoted_status`', sqlValuesStr,sqlVariables, sqlValues)
             injectTweet2Mysql(tweet['quoted_status'],db,cursor)
 
 
     if('retweeted_status' in tweet):
         if (str(type(tweet['retweeted_status'])) != '<type \'NoneType\'>'):
-            sqlValuesStr = '\'1\''
+            sqlValuesStr = 1
             appendValuseAndVariablse('`retweeted_status`', sqlValuesStr,sqlVariables, sqlValues)
             injectTweet2Mysql(tweet['retweeted_status'], db, cursor)
 
@@ -220,5 +220,5 @@ def InsertTweetsSQLStr(tweet,db,cursor):
     variablesSqlStr = ','.join(variablesSql)
     valuesSqlStr=','.join(valuesSql)
     finalsql = "INSERT INTO`Tweets`(" + variablesSqlStr + ")  VALUES("  + valuesSqlStr + ");"
-    print finalsql
-    return "finnal update sql "
+    # print finalsql
+    return finalsql

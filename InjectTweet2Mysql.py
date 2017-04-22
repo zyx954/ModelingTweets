@@ -1,3 +1,5 @@
+#!/usr/bin/env python # -*- coding: utf8 -*-
+
 import InsertUserStatement
 import InsertTweetsStatement
 import UpdateUserStatement
@@ -8,7 +10,9 @@ import datetime
 
 #inject one particulat tweet based on informaton betweetn DB and tweet
 def injectTweet2Mysql(tweet,db, cursor):
-
+    InsertTweetsSQL = ''
+    InsertUserSQL = ''
+    UpdateUserSQL = ''
     try:
 
         # tweet['id']
@@ -38,14 +42,14 @@ def injectTweet2Mysql(tweet,db, cursor):
                 cursor.execute(sqlOnUpdatetime)
                 useInfoUpdataTimeInDB = cursor.fetchone()
                 useInfoUpdataTimeInDB = useInfoUpdataTimeInDB[0]  # dateTime type
-                print "useInfoUpdataTimeInDB is "
-                print useInfoUpdataTimeInDB
+                # print "useInfoUpdataTimeInDB is "
+                # print useInfoUpdataTimeInDB
                 if(tweetTimeStamp > useInfoUpdataTimeInDB):
                     # the user info in tweets is lastest info-->need to update user Info in DB
                     UpdateUserSQL = UpdateUserSQLStr(tweet);
-                    print UpdateUserSQL
+                    # print UpdateUserSQL
                     cursor.execute(UpdateUserSQL)
-                    print "****** userinfo in DB  updated *******"
+                    # print "****** userinfo in DB  updated *******"
                 # else:
                 #     #the user info in tweets is old info--> not need to update user info in DB
                     pass
@@ -70,6 +74,9 @@ def injectTweet2Mysql(tweet,db, cursor):
     except:
     #     print args
         print "$$$this is RuntimeError"
+        print InsertTweetsSQL
+        print InsertUserSQL
+        print UpdateUserSQL
     # pass error
         db.rollback()
         traceback.print_exc()
