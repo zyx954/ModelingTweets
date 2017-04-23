@@ -101,7 +101,7 @@ def InsertUserSQLStr(tweet):
             #                                                         "\\\\")
             # utf8string_description = utf8string_description.replace("\\",
             #                                                         "\\\\")
-            # sqlValues = sqlValues + ',\'' + utf8string_description + '\''
+            sqlValues = sqlValues + ',\'' + utf8string_description + '\''
             # sqlValues = sqlValues +  ','+'%s'
         elif(str(descriptionTpye)=='<type \'NoneType\'>'):
             sqlValues = sqlValues + ',\'none\''
