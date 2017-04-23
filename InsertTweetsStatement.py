@@ -26,8 +26,8 @@ def jointInsertTweetVarAndValue(tweet,variable,sqlVariables,sqlValues):
         elif (tpye_ == unicode):
             utf8string_value = value.encode("utf-8")
             # replease the possible single quotes to \'
-            # utf8string_value = utf8string_value.replace("'", "\\\'")
-            sqlValuesStr='\"' + utf8string_value + '\"'
+            utf8string_value = utf8string_value.replace("'", "\\\'")
+            sqlValuesStr='\'' + utf8string_value + '\''
             sqlValues.append(sqlValuesStr)
         elif (str(tpye_) == '<type \'NoneType\'>'):
             sqlValuesStr = '\' None\''

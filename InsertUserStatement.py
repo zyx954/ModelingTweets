@@ -96,9 +96,13 @@ def InsertUserSQLStr(tweet):
         elif(descriptionTpye==unicode):
             utf8string_description = description.encode("utf-8")
             # print utf8string_description
-            # utf8string_description=utf8string_description.replace("'","\\\'")
-            # sqlValues = sqlValues + ',\"' + utf8string_description + '\"'
-            sqlValues = sqlValues +  ','+'%s'
+            utf8string_description=utf8string_description.replace("'","\\\'")
+            # utf8string_description = utf8string_description.replace("\"",
+            #                                                         "\\\\")
+            # utf8string_description = utf8string_description.replace("\\",
+            #                                                         "\\\\")
+            # sqlValues = sqlValues + ',\'' + utf8string_description + '\''
+            # sqlValues = sqlValues +  ','+'%s'
         elif(str(descriptionTpye)=='<type \'NoneType\'>'):
             sqlValues = sqlValues + ',\'none\''
         else:
@@ -508,7 +512,7 @@ def InsertUserSQLStr(tweet):
     # print sqlValues
 
     # finalSql =
-    finalSql = '"""INSERT INTO `User` ' + '(' + sqlVariables + ')' + ' VALUES ' + \
-          '(' + sqlValues + ')"""'
-    print finalSql
+    finalSql = 'INSERT INTO `User` ' + '(' + sqlVariables + ')' + ' VALUES ' + \
+          '(' + sqlValues + ')'
+    # print finalSql
     return finalSql
