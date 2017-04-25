@@ -1,17 +1,22 @@
 # project
+
 This is part of project on data injection from Pickle file(tweets collected from Twitter) to Mysql Database.
 
-The file introduction:
+Basic introduction:
 
-MainEntry.py :  loop all the instance within pickle file(50,000 each)
+    1.MainEntry.py :  loop all the instance within pickle file(50,000 each)
 
-insertTweets2DB.py : condition statement on tweets and user table. This method will update user information if user update their profile.
+    2.insertTweets2DB.py : condition statement on tweets and user table. This method will update user information if user update their profile.
 
+    3.InsertUserStatement.py: conver all the related variables from tweets standard into Mysql standard;  Return corresponding insert SQL for user table.
+    4.UpdateUserInfo.py  : generate update statement
 
-InsertUserStatement.py: conver all the related variables from tweets standard into Mysql standard;  Return corresponding insert SQL for user table.
+    5.InsertTweets.py : generate insert tweets statement
 
-UpdateUserInfo.py  : generate update sql language
-
-
-& InsertTweets.py  ongoing... 
+Note:
+Current veision Problems: Insert statement did not handle all the errors in
+tweets(text & description value). Around 60 out of 60,000 errors occurs.
+--> Further improvement: refactoring InsertUserStatement & change sql
+statement into parameter style / handle all the possible errors(eg: " & \ in
+value)
 
