@@ -4,81 +4,114 @@ import json
 import Connect2Db as Connect2Db
 import traceback
 import  GettingInfoFromDB
-import GettingInstanceFromTweets
-import GenerateInstance, GettingInstanceOfUser,GettingNegativeWords
+
 from numpy import array
 import time
+import numpy as np
+
+import cProfile
 
 
-
-#aim
-#--> extra features from DB<--based on the feature in paper.
-
-
-GettingAllRelatedVarsFromDBTweets=GettingInfoFromDB.GettingAllRelatedVarsFromDBTweets
-gettingAllValueOfFollowerAndFollowee=GettingInfoFromDB.gettingAllValueOfFollowerAndFollowee
-GettingInstanceFromTweets=GettingInstanceFromTweets.GettingInstanceFromTweets
-GenerateInstance=GenerateInstance.GenerateInstance
-GettingInstanceOfUser=GettingInstanceOfUser.gettingInstanceOfUser
-gettingNegativeWords=GettingNegativeWords.gettingNegativeWords
-try:
-    # print json.dumps(data3[100], indent=1)
-    data=[]
-    target=[]
-    db, cursor = Connect2Db.connect_db()
-    metadataFromTweets,targetMetadat = GettingAllRelatedVarsFromDBTweets(db,
-                                                                      cursor,0)
-    followers_count_list, percentile5_OnFollower, percentile5_OnFollowee = \
-        gettingAllValueOfFollowerAndFollowee(db, cursor,0)
-
-    counter = 0
-    print 'the length of metadataFromTweets is : ' + str(len(metadataFromTweets))
-
-    NEGATIVE_opinion_words= gettingNegativeWords()
-    start = time.time()
+def mainEntry():
+    import GettingInstanceFromTweets
+    import GenerateInstance
+    import GettingInstanceOfUser, GettingNegativeWords
+    #aim
+    #--> extra features from DB<--based on the feature in paper.
 
 
-    for i in metadataFromTweets:
-        instanceOfTweets= GettingInstanceFromTweets(i,NEGATIVE_opinion_words,0)
-        if instanceOfTweets:
+    GettingAllRelatedVarsFromDBTweets=GettingInfoFromDB.GettingAllRelatedVarsFromDBTweets
+    gettingAllValueOfFollowerAndFollowee=GettingInfoFromDB.gettingAllValueOfFollowerAndFollowee
+    GettingInstanceFromTweets=GettingInstanceFromTweets.GettingInstanceFromTweets
+    GenerateInstance=GenerateInstance.GenerateInstance
+    GettingInstanceOfUser=GettingInstanceOfUser.gettingInstanceOfUser
+    gettingNegativeWords=GettingNegativeWords.gettingNegativeWords
+    try:
+        # print json.dumps(data3[100], indent=1)
+        data=[]
+        target=[]
+        db, cursor = Connect2Db.connect_db()
+        metadataFromTweets,targetMetadat = GettingAllRelatedVarsFromDBTweets(db,
+                                                                          cursor,0)
+        followers_count_list, percentile5_OnFollower, percentile5_OnFollowee = \
+            gettingAllValueOfFollowerAndFollowee(db, cursor,0)
+
+        counter = 0
+        print 'the length of metadataFromTweets is : ' + str(len(metadataFromTweets))
+
+        NEGATIVE_opinion_words= gettingNegativeWords()
+
+        followers_count_list_sort = np.sort(followers_count_list)
+        a_afterInitial, n = initial(followers_count_list)
+        # a_len = a_len_function(a_afterInitial)
+        a_len_else = a_len_else_function(a_afterInitial)
+        print "a_len_else"
+        print a_len_else
+        print "start loop"
+
+        start = time.time()
+
+        # i=1
+        for i in metadataFromTweets:
+            instanceOfTweets= GettingInstanceFromTweets(i,NEGATIVE_opinion_words,0)
+            # if instanceOfTweets:
             userId = i[3]
 
             instanceOfUser= GettingInstanceOfUser(userId,db, cursor,
-                                                  followers_count_list,
+                                                  followers_count_list_sort,n,a_len_else,
                                                   percentile5_OnFollower,percentile5_OnFollowee,0)
-            # if instanceOfUser:
-            oneInstance = instanceOfTweets+instanceOfUser
-            data.append(oneInstance)
-            target.append(targetMetadat[counter])
-            counter=counter+1
-            if counter == 100:
-                print "this is the first time to reach 100000 , the time is : "
-                end = time.time()
-                print(end - start)
-                data = array(data)
-                target = array(target)
-                file = open('tweetsFeatureData.pkl', 'w')
-                pickle.dump(data, file)
-                pickle.dump(target, file)
+            if(instanceOfUser):
+                # if instanceOfUser:
+                oneInstance = instanceOfTweets+instanceOfUser
+                data.append(oneInstance)
+                target.append(targetMetadat[counter])
+                counter=counter+1
+                if counter == 1000:
+                    print "this is the first time to reach 100 , the time is : "
+                    end = time.time()
+                    print "the time is "
+                    print (end - start)
+                    data = array(data)
+            #         target = array(target)
+            #         file = open('tweetsFeatureData.pkl', 'w')
+            #         pickle.dump(data, file)
+            #         pickle.dump(target, file)
+                    break
+            pass
+        # data = array(data)
+        # target=array(target)
+        # file = open('tweetsFeatureData.pkl','w')
+        # pickle.dump(data,file)
+        # pickle.dump(target,file)
 
-    data = array(data)
-    target=array(target)
-    file = open('tweetsFeatureData.pkl','w')
-    pickle.dump(data,file)
-    pickle.dump(target,file)
-
-    print "success"
-
-
-
-except:
-    traceback.print_exc()
-finally:
-    db.close()
-    file.close()
-
-    print "pkl_file & db closed"
+        print "success"
 
 
 
+    except:
+        traceback.print_exc()
+    finally:
+        db.close()
+        # file.close()
+
+        print "pkl_file & db closed"
+
+
+#these two functions are abstract from percentileofscore -->For the
+# performace purpose
+def initial(a):
+    a_afterInitial = np.array(a)
+    n = len(a)
+    return a_afterInitial,n
+
+def a_len_else_function(a_AfterInitial):
+    a_len_else = np.array(list(range(len(a_AfterInitial)))) + 1.0
+    return a_len_else
+
+
+if __name__ == "__main__":
+   import profile
+
+   # mainEntry()
+   profile.run("mainEntry()")
 

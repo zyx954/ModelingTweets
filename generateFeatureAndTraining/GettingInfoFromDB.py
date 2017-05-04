@@ -96,18 +96,23 @@ def gettingInfoFromUser(userId,db, cursor,verbos=1):
         cursor.execute("SELECT followers_count,friends_count,description,"
                        "url FROM TweetsDB.User where id = " +str(userId)+";")
         result = list(cursor.fetchall())
-        followers_count = result[0][0]
-        friends_count = result[0][1]
-        description = result[0][2]
-        url = result[0][3]
+        if(result):
+            followers_count = result[0][0]
+            friends_count = result[0][1]
+            description = result[0][2]
+            url = result[0][3]
+            if (verbos):
+                print len(result)
+                print followers_count, friends_count, description, url
 
-        if(verbos):
-            print len(result)
-            print followers_count,friends_count,description,url
+            return followers_count, friends_count, description, url
+        else:
+            return None,None,None,None
 
 
-        return followers_count,friends_count,description,url
+
         # print "success"
     except:
         traceback.print_exc()
+        print result ,userId
         print "not successful"
