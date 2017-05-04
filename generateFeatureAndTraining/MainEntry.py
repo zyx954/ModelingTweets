@@ -23,7 +23,6 @@ def mainEntry():
     GettingAllRelatedVarsFromDBTweets=GettingInfoFromDB.GettingAllRelatedVarsFromDBTweets
     gettingAllValueOfFollowerAndFollowee=GettingInfoFromDB.gettingAllValueOfFollowerAndFollowee
     GettingInstanceFromTweets=GettingInstanceFromTweets.GettingInstanceFromTweets
-    GenerateInstance=GenerateInstance.GenerateInstance
     GettingInstanceOfUser=GettingInstanceOfUser.gettingInstanceOfUser
     gettingNegativeWords=GettingNegativeWords.gettingNegativeWords
     try:
@@ -43,7 +42,6 @@ def mainEntry():
 
         followers_count_list_sort = np.sort(followers_count_list)
         a_afterInitial, n = initial(followers_count_list)
-        # a_len = a_len_function(a_afterInitial)
         a_len_else = a_len_else_function(a_afterInitial)
         print "a_len_else"
         print a_len_else
@@ -54,19 +52,17 @@ def mainEntry():
         # i=1
         for i in metadataFromTweets:
             instanceOfTweets= GettingInstanceFromTweets(i,NEGATIVE_opinion_words,0)
-            # if instanceOfTweets:
             userId = i[3]
 
             instanceOfUser= GettingInstanceOfUser(userId,db, cursor,
                                                   followers_count_list_sort,n,a_len_else,
                                                   percentile5_OnFollower,percentile5_OnFollowee,0)
             if(instanceOfUser):
-                # if instanceOfUser:
                 oneInstance = instanceOfTweets+instanceOfUser
                 data.append(oneInstance)
                 target.append(targetMetadat[counter])
                 counter=counter+1
-                if counter == 1000:
+                if counter == 10000:
                     print "this is the first time to reach 100 , the time is : "
                     end = time.time()
                     print "the time is "
