@@ -73,23 +73,23 @@ def mainEntry():
                 data.append(oneInstance)
                 target.append(targetMetadat[counter])
                 counter=counter+1
-                if counter == 100000:
-                    print "this is the first time to reach 100 , the time is : "
-                    end = time.time()
-                    print "the time is "
-                    print (end - start)
-                    data = array(data)
-                    target = array(target)
-                    file = open('tweetsFeatureData.pkl', 'w')
-                    pickle.dump(data, file)
-                    pickle.dump(target, file)
-                    break
+                # if counter == 100000:
+                #     print "this is the first time to reach 100 , the time is : "
+                #     end = time.time()
+                #     print "the time is "
+                #     print (end - start)
+                #     data = array(data)
+                #     target = array(target)
+                #     file = open('tweetsFeatureData.pkl', 'w')
+                #     pickle.dump(data, file)
+                #     pickle.dump(target, file)
+                #     break
             pass
-        # data = array(data)
-        # target=array(target)
-        # file = open('tweetsFeatureData.pkl','w')
-        # pickle.dump(data,file)
-        # pickle.dump(target,file)
+        data = array(data)
+        target=array(target)
+        file = open('tweetsFeatureData.pkl','w')
+        pickle.dump(data,file)
+        pickle.dump(target,file)
 
         print "success"
 
@@ -99,7 +99,7 @@ def mainEntry():
         traceback.print_exc()
     finally:
         db.close()
-        # file.close()
+        file.close()
 
         print "pkl_file & db closed"
 
