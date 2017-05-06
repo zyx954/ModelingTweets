@@ -14,7 +14,6 @@ import cProfile
 
 def mainEntry():
     import GettingInstanceFromTweets
-    import GenerateInstance
     import GettingInstanceOfUser, GettingNegativeWords
     #aim
     #--> extra features from DB<--based on the feature in paper.
@@ -43,6 +42,17 @@ def mainEntry():
         followers_count_list_sort = np.sort(followers_count_list)
         a_afterInitial, n = initial(followers_count_list)
         a_len_else = a_len_else_function(a_afterInitial)
+
+        spamHashtags_set = (
+            ['TEAMFOLLOWBACK', 'TFBJP', 'gameinsight', 'androidgames',
+             'OPENFOLLOW',
+             'androidgames', 'FF', 'RETWEET', 'IPADGAMES', 'RT', 'SougoFollow',
+             'ipad', 'FOLLOWBACK', 'THF', 'FOLLOWNGAIN', '500aday',
+             'AUTOFOLLOW',
+             'MUSTFOLLOW', 'TEAMHITFOLLOW', 'HITFOLLOWSTEAM'])
+        spamHashtags_set_l = set([x.lower() for x in spamHashtags_set])
+
+
         print "a_len_else"
         print a_len_else
         print "start loop"
@@ -51,7 +61,8 @@ def mainEntry():
 
         # i=1
         for i in metadataFromTweets:
-            instanceOfTweets= GettingInstanceFromTweets(i,NEGATIVE_opinion_words,0)
+            instanceOfTweets= GettingInstanceFromTweets(i,
+                                                        NEGATIVE_opinion_words,spamHashtags_set_l,0)
             userId = i[3]
 
             instanceOfUser= GettingInstanceOfUser(userId,db, cursor,
@@ -62,16 +73,16 @@ def mainEntry():
                 data.append(oneInstance)
                 target.append(targetMetadat[counter])
                 counter=counter+1
-                if counter == 10000:
+                if counter == 100000:
                     print "this is the first time to reach 100 , the time is : "
                     end = time.time()
                     print "the time is "
                     print (end - start)
                     data = array(data)
-            #         target = array(target)
-            #         file = open('tweetsFeatureData.pkl', 'w')
-            #         pickle.dump(data, file)
-            #         pickle.dump(target, file)
+                    target = array(target)
+                    file = open('tweetsFeatureData.pkl', 'w')
+                    pickle.dump(data, file)
+                    pickle.dump(target, file)
                     break
             pass
         # data = array(data)
@@ -108,6 +119,6 @@ def a_len_else_function(a_AfterInitial):
 if __name__ == "__main__":
    import profile
 
-   # mainEntry()
-   profile.run("mainEntry()")
+   mainEntry()
+   # profile.run("mainEntry()")
 

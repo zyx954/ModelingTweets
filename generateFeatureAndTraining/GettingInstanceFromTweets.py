@@ -4,7 +4,8 @@
 from string import ascii_uppercase
 
 
-def GettingInstanceFromTweets(instance,NEGATIVE_opinion_words,verbose=1):
+def GettingInstanceFromTweets(instance,NEGATIVE_opinion_words,
+                              spamHashtags_set_l,verbose=1):
     #based on the metadata from data generate corresponding feature valuse
     # from tweets
     # within instance
@@ -55,7 +56,7 @@ def GettingInstanceFromTweets(instance,NEGATIVE_opinion_words,verbose=1):
         url_in_tweets=1
     if ('suffix' in text.lower()):
         suffix_hashtag=1
-    if (containsSpammy_hashtag(hashtags_c,verbose)):
+    if (containsSpammy_hashtag(hashtags_c,spamHashtags_set_l,verbose)):
         spammy_hashtag = 1
 
     if (containsNegative_words(text,NEGATIVE_opinion_words,verbose)):
@@ -127,19 +128,19 @@ def containsCapitalized_hashtag(hashtags_c,verbose=True):
         #the hashtags_c is empty<--this will consider as false
         return result
 
-def containsSpammy_hashtag(hashtags_c,verbose=1):
+def containsSpammy_hashtag(hashtags_c,spamHashtags_set_l,verbose=1):
     #compare hashtags with a list of spammy hashtages in the paper.
     if hashtags_c:
         # read spammy hashtags
         hashtags_List = hashtags_c.split(',')
         hashtags_Set_l = set([x.lower() for x in hashtags_List])
-
-        spamHashtags_set = (
-        ['TEAMFOLLOWBACK', 'TFBJP', 'gameinsight', 'androidgames', 'OPENFOLLOW',
-         'androidgames', 'FF', 'RETWEET', 'IPADGAMES', 'RT', 'SougoFollow',
-         'ipad', 'FOLLOWBACK', 'THF', 'FOLLOWNGAIN', '500aday', 'AUTOFOLLOW',
-         'MUSTFOLLOW', 'TEAMHITFOLLOW', 'HITFOLLOWSTEAM'])
-        spamHashtags_set_l = set([x.lower() for x in spamHashtags_set])
+        # extract these calculation to outside
+        # spamHashtags_set = (
+        # ['TEAMFOLLOWBACK', 'TFBJP', 'gameinsight', 'androidgames', 'OPENFOLLOW',
+        #  'androidgames', 'FF', 'RETWEET', 'IPADGAMES', 'RT', 'SougoFollow',
+        #  'ipad', 'FOLLOWBACK', 'THF', 'FOLLOWNGAIN', '500aday', 'AUTOFOLLOW',
+        #  'MUSTFOLLOW', 'TEAMHITFOLLOW', 'HITFOLLOWSTEAM'])
+        # spamHashtags_set_l = set([x.lower() for x in spamHashtags_set])
         overlap = hashtags_Set_l & spamHashtags_set_l
 
 
