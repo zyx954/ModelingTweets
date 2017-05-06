@@ -1,5 +1,8 @@
 # project
 
+
+DataCollection Folder:
+    Collect tweets based on known tweets ID
 dataInjectionFromPickle2DB Folder:
     This is part of project on data injection from Pickle file(tweets collected from Twitter) to Mysql Database.
 
@@ -23,9 +26,6 @@ dataInjectionFromPickle2DB Folder:
 
 
 generateFeatureAndTraining Folder
-    Task: generature from tweet in DB to two npArrays(data and target)
-    status: Finshed
-    Problems: performance needs to be improvemented. Now (35s per 100 instances)
-
+    Task: generate feature from tweet in DB to two npArrays(data and target)
 
 
