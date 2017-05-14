@@ -73,25 +73,11 @@ def mainEntry():
             if(instanceOfUser):
                 oneInstance = instanceOfTweets+instanceOfUser
                 data.append(oneInstance)
-                target.append(targetMetadat[counter])
-                tweetsID.append(tweetsIDs[counter])
-                if(tweetsIDs[counter]!=i[5]):
-                    print "error the data miss match"
-                    print "tweetsIDs[counter]!=i[5]"
-                    print "tweetsIDs[counter]" + str(tweetsIDs[counter])
-                    print "i[5]  " + str(i[5])
+                target.append(i[4])
+                tweetsID.append(i[5])
 
-                    break
 
-                # test on if the
-                if (i[5]==329854314845712386):
-                    if(tweetsIDs[counter]==i[5]):
-                        print "Now the previoud error covered:"
-                        print "tweetsIDs[counter]!=i[5]"
-                        print "tweetsIDs[counter]" + str(tweetsIDs[counter])
-                        break
 
-            counter=counter+1
                 # if counter == 100000:
                 #     print "this is the first time to reach 100 , the time is : "
                 #     end = time.time()
@@ -104,6 +90,10 @@ def mainEntry():
                 #     pickle.dump(target, file)
                 #     break
             pass
+        end = time.time()
+        print "the time is within loop is "
+        print (end - start)
+        start = time.time()
         data = array(data)
         target=array(target)
         tweetsID=array(tweetsID)
@@ -111,6 +101,9 @@ def mainEntry():
         pickle.dump(data,file)
         pickle.dump(target,file)
         pickle.dump(tweetsID)
+        end = time.time()
+        print "the time is store data  is "
+        print (end - start)
 
         print "success"
 

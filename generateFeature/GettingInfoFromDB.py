@@ -30,24 +30,12 @@ def GettingAllRelatedVarsFromDBTweets(db, cursor, verbos=1):
 
         # print metadataFromTweets[0]
         # get all the target value
-        targetMetadat =[]
-        tweetsIDs =  []
-        firstTime = True
-        for m in metadataFromTweets:
-            if firstTime:
-                print "for the first instance , the user id is " + str(m[3])
-                print "for the first instance , the user numberOfHashtags_c,text,hashtags_c, user  ,maliciousMark,id is " + str(m)
-                firstTime= False
-            targetMetadat.append(m[4])
-            tweetsIDs.append(m[5])
+
 
         # print targetMetadat[0]
         if(verbos):
-            print "len of targetMetadat is "  + str(len(targetMetadat))
-            print "len of tweetsIDs is " + str(len(tweetsIDs))
-            print tweetsIDs[0]
             print "len of metadataFromTweets is " + str(len(metadataFromTweets))
-        return metadataFromTweets, targetMetadat,tweetsIDs
+        return metadataFromTweets
         # print "success"
     except:
         traceback.print_exc()
