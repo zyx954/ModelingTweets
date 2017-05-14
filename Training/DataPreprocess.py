@@ -14,6 +14,8 @@ try:
 
     print(data.shape, data.dtype)
     print(target.shape, target.dtype)
+    print data[1:100]
+    print target[1:100]
     # print test.shape
 
 
@@ -27,6 +29,9 @@ try:
 
     print(data.shape, data.dtype)
     print(target.shape, target.dtype)
+
+    print data[1:100]
+    print target[1:100]
 
 
     #there no missing value
