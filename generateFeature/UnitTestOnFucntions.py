@@ -5,6 +5,7 @@ import GettingInfoFromDB
 import Connect2Db as Connect2Db
 
 
+
 class TestMethods(unittest.TestCase):
     hashtags_c ='TEAMFOLLOWBACK,TFBJP'
 
@@ -75,8 +76,15 @@ class TestMethods(unittest.TestCase):
 
         finally:
             db.close()
+    def test_GettingAllRelatedVarsFromDBTweets(self):
 
+        GettingAllRelatedVarsFromDBTweets = GettingInfoFromDB.GettingAllRelatedVarsFromDBTweets
+        try:
+            db, cursor = Connect2Db.connect_db()
+            GettingAllRelatedVarsFromDBTweets(db,cursor,1)
 
+        finally:
+            db.close()
 
 
 if __name__ == '__main__':

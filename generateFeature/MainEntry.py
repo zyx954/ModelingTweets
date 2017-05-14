@@ -28,8 +28,10 @@ def mainEntry():
         # print json.dumps(data3[100], indent=1)
         data=[]
         target=[]
+        tweetsID=[]
         db, cursor = Connect2Db.connect_db()
-        metadataFromTweets,targetMetadat = GettingAllRelatedVarsFromDBTweets(db,
+        metadataFromTweets,targetMetadat,tweetsIDs \
+            = GettingAllRelatedVarsFromDBTweets(db,
                                                                           cursor,0)
         followers_count_list, percentile5_OnFollower, percentile5_OnFollowee = \
             gettingAllValueOfFollowerAndFollowee(db, cursor,0)
@@ -72,7 +74,24 @@ def mainEntry():
                 oneInstance = instanceOfTweets+instanceOfUser
                 data.append(oneInstance)
                 target.append(targetMetadat[counter])
-                counter=counter+1
+                tweetsID.append(tweetsIDs[counter])
+                if(tweetsIDs[counter]!=i[5]):
+                    print "error the data miss match"
+                    print "tweetsIDs[counter]!=i[5]"
+                    print "tweetsIDs[counter]" + str(tweetsIDs[counter])
+                    print "i[5]  " + str(i[5])
+
+                    break
+
+                # test on if the
+                if (i[5]==329854314845712386):
+                    if(tweetsIDs[counter]==i[5]):
+                        print "Now the previoud error covered:"
+                        print "tweetsIDs[counter]!=i[5]"
+                        print "tweetsIDs[counter]" + str(tweetsIDs[counter])
+                        break
+
+            counter=counter+1
                 # if counter == 100000:
                 #     print "this is the first time to reach 100 , the time is : "
                 #     end = time.time()
@@ -87,9 +106,11 @@ def mainEntry():
             pass
         data = array(data)
         target=array(target)
+        tweetsID=array(tweetsID)
         file = open('tweetsFeatureData.pkl','w')
         pickle.dump(data,file)
         pickle.dump(target,file)
+        pickle.dump(tweetsID)
 
         print "success"
 
