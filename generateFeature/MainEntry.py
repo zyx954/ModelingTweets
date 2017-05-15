@@ -30,8 +30,7 @@ def mainEntry():
         target=[]
         tweetsID=[]
         db, cursor = Connect2Db.connect_db()
-        metadataFromTweets,targetMetadat,tweetsIDs \
-            = GettingAllRelatedVarsFromDBTweets(db,
+        metadataFromTweets= GettingAllRelatedVarsFromDBTweets(db,
                                                                           cursor,0)
         followers_count_list, percentile5_OnFollower, percentile5_OnFollowee = \
             gettingAllValueOfFollowerAndFollowee(db, cursor,0)
@@ -100,7 +99,7 @@ def mainEntry():
         file = open('tweetsFeatureData.pkl','w')
         pickle.dump(data,file)
         pickle.dump(target,file)
-        pickle.dump(tweetsID)
+        pickle.dump(tweetsID,file)
         end = time.time()
         print "the time is store data  is "
         print (end - start)

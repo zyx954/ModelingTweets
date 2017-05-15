@@ -6,7 +6,7 @@ import os
 
 #get data and target
 try:
-    f= open('../generateFeature/tweetsFeatureData.pkl', 'rb')
+    f= open('./tweetsFeatureData.pkl', 'rb')
 
     data = pickle.load(f)
     target = pickle.load(f)

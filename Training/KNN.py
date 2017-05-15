@@ -1,5 +1,5 @@
-from sklearn import svm
 import pickle
+from sklearn import neighbors
 from sklearn.metrics import confusion_matrix
 
 # get  data(dictionar) from pickle
@@ -24,45 +24,30 @@ test_target = target_dic["test_target"]
 
 print train_data.shape, validation_data.shape, test_data.shape
 print train_target.shape, validation_target.shape, test_target.shape
-#
+
+
 
 #variables for classifiers from differnt parameters/models and its score
 classifiers = []
 parameters = []
 scores = []
 
-
-#build SVM classifiers via different parameters
-
-
-# for kernel in [ 'linear','rbf','poly','sigmoid']:
-#     for degree in [3,4, 6,9]:
-#         for class_weight in ['balanced',None]:
-#             clf = svm.SVC(kernel=kernel,degree=degree,class_weight=class_weight,cache_size=2000)
-#             clf.fit(train_data, train_target)
-#             parameter = "kernel: " + str(kernel) + " degree for poly: ", str(degree) + " class_weight: ", +str(class_weight)
-#             score = clf.score(validation_data,validation_target)
-#             classifiers.append(clf)
-#             parameters.append(parameter)
-#             scores.append(score)
-#             print parameter + "---->score: " + str(score)
-
-
-for loss in [ 'squared_hinge','hinge']:
-# for loss in ['squared_hinge']:
-
-    for class_weight in ['balanced',None]:
-    # for class_weight in ['balanced']:
-
-        clf = svm.LinearSVC(loss=loss,class_weight=class_weight)
+#build kNN classifiers
+# for  n in range(1,1000,100):
+for n in range(1, 100, 10):
+# for n in range (1,21,1):
+    for weights in ['uniform', 'distance']:
+        # we create an instance of Neighbours Classifier and fit the data.
+        clf = neighbors.KNeighborsClassifier(n, weights=weights)
         clf.fit(train_data, train_target)
-        #store classifier with particular paramters and its score into sperately list
-        parameter = "loss: " +str(loss) + "; class_weight: " + str(class_weight)
-        score = clf.score(validation_data,validation_target)
+        # pdf = clf.predict(validation_data)
+        score = clf.score(validation_data,validation_target);
+        parameter = "the number of neighbors" + str(n) + "; weights : " + str(weights)
         classifiers.append(clf)
         parameters.append(parameter)
         scores.append(score)
-        print parameter + "---->score: " + str(score)
+
+        print parameter + "===>score is: ",score
 
 
 #evaluation
