@@ -31,7 +31,7 @@ parameters = []
 scores = []
 
 
-#build DT classifiers <--via different parameters
+# build DT classifiers <--via different parameters
 # for criterion in ['gini', 'entropy']:
 #     for max_features in ['sqrt','log2', 'auto',None]:
 #         for class_weight in ['balanced',None]:

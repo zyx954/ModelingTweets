@@ -35,34 +35,34 @@ scores = []
 #build SVM classifiers via different parameters
 
 
-# for kernel in [ 'linear','rbf','poly','sigmoid']:
-#     for degree in [3,4, 6,9]:
-#         for class_weight in ['balanced',None]:
-#             clf = svm.SVC(kernel=kernel,degree=degree,class_weight=class_weight,cache_size=2000)
-#             clf.fit(train_data, train_target)
-#             parameter = "kernel: " + str(kernel) + " degree for poly: ", str(degree) + " class_weight: ", +str(class_weight)
-#             score = clf.score(validation_data,validation_target)
-#             classifiers.append(clf)
-#             parameters.append(parameter)
-#             scores.append(score)
-#             print parameter + "---->score: " + str(score)
+for kernel in [ 'linear','rbf','poly','sigmoid']:
+    for degree in [3,4, 6,9]:
+        for class_weight in ['balanced',None]:
+            clf = svm.SVC(kernel=kernel,degree=degree,class_weight=class_weight,cache_size=2000)
+            clf.fit(train_data, train_target)
+            parameter = "kernel: " + str(kernel) + " degree for poly: ", str(degree) + " class_weight: ", +str(class_weight)
+            score = clf.score(validation_data,validation_target)
+            classifiers.append(clf)
+            parameters.append(parameter)
+            scores.append(score)
+            print parameter + "---->score: " + str(score)
 
-
-for loss in [ 'squared_hinge','hinge']:
-# for loss in ['squared_hinge']:
-
-    for class_weight in ['balanced',None]:
-    # for class_weight in ['balanced']:
-
-        clf = svm.LinearSVC(loss=loss,class_weight=class_weight)
-        clf.fit(train_data, train_target)
-        #store classifier with particular paramters and its score into sperately list
-        parameter = "loss: " +str(loss) + "; class_weight: " + str(class_weight)
-        score = clf.score(validation_data,validation_target)
-        classifiers.append(clf)
-        parameters.append(parameter)
-        scores.append(score)
-        print parameter + "---->score: " + str(score)
+#
+# for loss in [ 'squared_hinge','hinge']:
+# # for loss in ['squared_hinge']:
+#
+#     for class_weight in ['balanced',None]:
+#     # for class_weight in ['balanced']:
+#
+#         clf = svm.LinearSVC(loss=loss,class_weight=class_weight)
+#         clf.fit(train_data, train_target)
+#         #store classifier with particular paramters and its score into sperately list
+#         parameter = "loss: " +str(loss) + "; class_weight: " + str(class_weight)
+#         score = clf.score(validation_data,validation_target)
+#         classifiers.append(clf)
+#         parameters.append(parameter)
+#         scores.append(score)
+#         print parameter + "---->score: " + str(score)
 
 
 #evaluation
