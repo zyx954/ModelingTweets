@@ -511,6 +511,7 @@ def InsertUserSQLStr(tweet):
     # print sqlVariables
     # print sqlValues
 
+
     # finalSql =
     finalSql = 'INSERT INTO `User` ' + '(' + sqlVariables + ')' + ' VALUES ' + \
           '(' + sqlValues + ')'
