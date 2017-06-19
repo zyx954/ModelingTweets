@@ -3,22 +3,9 @@ from Tkinter import *
 # Python 2.7, ttk provides Combobox
 from ttk import *
 import GetTweetsIDFromPickle
+import GetTweetsFeatureFiles
 
 
-
-def comboBox_DB( values):
-    print values
-
-def comboBox_TweetsID(values):
-    global featureInfo,tweetsID_feature_target_Dic,tweetsInfo,userInfo,tweetsID_tweets_Dic, tweetsID_user_Dic
-    print values
-    value_int= int(values)
-    featureValue = tweetsID_feature_target_Dic[value_int]
-    tweetValue = tweetsID_tweets_Dic[value_int]
-    userValue  = tweetsID_user_Dic [ value_int]
-    tweetsInfo.set(tweetValue )
-    userInfo.set(userValue )
-    featureInfo.set(featureValue )
 
 
 
@@ -27,11 +14,10 @@ T, F = True, False
 board_height = 600 # height of the board window
 board_width = 600 # width of the board window
 getTweetsIDFromPickle = GetTweetsIDFromPickle.getTweetsIDFromPickle;
+pickleFileName=''
 
-tweetsIDlist, tweetsID_feature_target_Dic, tweetsID_tweets_Dic, tweetsID_user_Dic = getTweetsIDFromPickle()
-
-
-
+tweetsIDlist, tweetsID_feature_target_Dic, tweetsID_tweets_Dic, tweetsID_user_Dic = getTweetsIDFromPickle(
+    pickleFileName)
 
 parent = Tk()
 
@@ -44,34 +30,13 @@ parent = parent  # a Tk GUI
 ## Size of the environment which is a square
 canvas_height = board_height
 canvas_width = board_width
-# length_of_side = 600 / (
-# max(WIDTH, HEIGHT) + 2)  # length of each room
-#
-# ###Read all the pictures and resize them to fit the environment
-# img = Image.open("IFN680_AIMA/images/gold.gif")
-# image_gold = img.resize((length_of_side, length_of_side))
-# gold_img = ImageTk.PhotoImage(image_gold)
-# img = Image.open("IFN680_AIMA/images/visited.gif")
-# image_visited = img.resize((length_of_side, length_of_side))
-# visited_img = ImageTk.PhotoImage(image_visited)
-# img = Image.open("IFN680_AIMA/images/blank.gif")
-# image_blank = img.resize((length_of_side, length_of_side))
-# blank_img = ImageTk.PhotoImage(image_blank)
-# img = Image.open("IFN680_AIMA/images/wall.gif")
-# image_wall = img.resize((length_of_side, length_of_side))
-# wall_img = ImageTk.PhotoImage(image_wall)
-# img = Image.open("IFN680_AIMA/images/robot.gif")
-# image_robot = img.resize((length_of_side, length_of_side))
-# robot_img = ImageTk.PhotoImage(image_robot)
-# img = Image.open("IFN680_AIMA/images/wumpus.gif")
-# image_wumpus = img.resize((length_of_side, length_of_side))
-# wumpus_img = ImageTk.PhotoImage(image_wumpus)
-# img = Image.open("IFN680_AIMA/images/pit.gif")
-# image_pit = img.resize((length_of_side, length_of_side))
-# pit_img = ImageTk.PhotoImage(image_pit)
 
-########## Left Widgets ##########
-# Create  setting Frame
+
+
+
+########## Generate Features pannel ##########
+
+## Create  setting Frame
 settingFrame = Frame(parent, borderwidth=2, relief=RIDGE)
 settingFrame.grid(row=0, column=0)
 # setting frame title
@@ -81,7 +46,7 @@ Label(settingFrame, text="Generate Features", font=('Arial', 14, 'bold')). \
 
 
 
-# Let user choose the db scheme
+####### Combobox1 DB : Let user choose the db scheme
 Label(settingFrame, text='Choose DB Scheme: ', font=('Arial', 10)). \
     grid(row=1, column=0, sticky='E', padx=5, pady=5)
 DbTableName = Combobox(settingFrame, text="DbTableName", \
@@ -94,34 +59,128 @@ DbTableName.current(0)
 # Add it to the setting panel
 DbTableName.grid(row=1, column=1, sticky=W, padx=5, pady=5)
 
+# TODO: generateFeature_Button needs links to getFeature function.
 generateFeature_Button = Button(settingFrame,text = "GetFeature")
 generateFeature_Button.grid(row=1, column=2, sticky=W, padx=5, pady=5)
+
 
 DbTableName.bind('<<ComboboxSelected>>', lambda x : comboBox_DB(
     DbTableName.get()))
 
+#get DB scheme value from comboBox DB
+def comboBox_DB( values):
+    print values
 
-#set Tweets ID comboBox
+
+#########Combobox2 pickleFile:  select pickle file from comboBox if exist
 Label(settingFrame,
-      text="choose an tweets ID to check the result:",
+      text="Choose the features from existed pickle files :",
       font=('Arial', 10)) \
     .grid(row=2, column=0, padx=5, pady=5)
 
-tweetsID=Combobox(settingFrame, text="tweetsID", \
+pickleFile=Combobox(settingFrame, text="pickleFile", \
                   state='readonly', font=('Courier', 10),
                   justify=LEFT)
-tweetsID.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+pickleFile.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+
+# get tweetsFeature*.pickle file name
+pickleFilelist = GetTweetsFeatureFiles.getTweetsFeatureFiles()
 # Add the tweets values
-tweetsID['values'] = tuple(tweetsIDlist)
+pickleFile['values'] = tuple(pickleFilelist)
 # Set the current position
-tweetsID.current(0)
+pickleFile.current(0)
 
 # Add it to the setting panel
-tweetsID.bind('<<ComboboxSelected>>', lambda x: comboBox_TweetsID(
-    tweetsID.get()))
+pickleFile.bind('<<ComboboxSelected>>', lambda x: comboBox_pickleFile(
+    pickleFile.get()))
 
 
-########## Right Widgets ##########
+#get tweets ID value from comboBox TweetsID
+def comboBox_pickleFile(values):
+    global pickleFileName
+    print values
+    pickleFileName = values
+
+
+    #########Dynamicly Create Combobox3 tweetsID:  set Tweets ID comboBox
+    tweetsIDlist, tweetsID_feature_target_Dic, tweetsID_tweets_Dic, tweetsID_user_Dic = getTweetsIDFromPickle(
+        pickleFileName)
+    Label(settingFrame,
+          text="choose an tweets ID to check the result:",
+          font=('Arial', 10)) \
+        .grid(row=3, column=0, padx=5, pady=5)
+
+    tweetsID=Combobox(settingFrame, text="tweetsID", \
+                      state='readonly', font=('Courier', 10),
+                      justify=LEFT)
+    tweetsID.grid(row=3, column=1, sticky=W, padx=5, pady=5)
+    # Add the tweets values
+    tweetsID['values'] = tuple(tweetsIDlist)
+    # if tweetsIDlist != []:
+    #     # Set the current position
+    #     tweetsID.current(0)
+
+    # Add it to the setting panel
+    tweetsID.bind('<<ComboboxSelected>>', lambda x: comboBox_TweetsID(
+        tweetsID.get()))
+
+    #get tweets ID value from comboBox TweetsID
+    def comboBox_TweetsID(values):
+        if(values is not None):
+            # featureInfo,tweetsID_feature_target_Dic,tweetsInfo,userInfo,tweetsID_tweets_Dic, tweetsID_user_Dic
+            print values
+            # Add the tweets values
+            tweetsID['values'] = tuple(tweetsIDlist)
+            if tweetsIDlist != []:
+                # Set the current position
+                tweetsID.current(0)
+        value_int= int(values)
+        tweetsVariableNames = ["numberOfHashtags_c","text","hashtags_c","user",
+                               "maliciousMark","id"]
+        userVariableNames = ["followers_count","friends_count","description","url"]
+        featureVariableNames = ["hashtags_more_two ","exclamation_sign ","url_in_tweets ","suffix_hashtag ","spammy_hashtag ","negative_words ","upper_case_characters ","capitalized_hashtag ","Followers_followees_ratio","description","url_in_user","followers_Less_5_percentile","followees_Less_5_percentile","Percentile_of_followers"]
+
+        featureValue = tweetsID_feature_target_Dic[value_int]
+        featureValue=addNamesForEachValue(featureValue,featureVariableNames)
+        tweetValue = tweetsID_tweets_Dic[value_int]
+        tweetValue = addNamesForEachValue(tweetValue, tweetsVariableNames)
+        userValue  = tweetsID_user_Dic [ value_int]
+        userValue = addNamesForEachValue(userValue, userVariableNames)
+
+
+        tweetsInfo.set(tweetValue )
+        userInfo.set(userValue )
+        featureInfo.set(featureValue )
+
+    def addNamesForEachValue(valueString,variableNames):
+        valuesList = valueString.split(',')
+        if len(valuesList)<10:
+            spliter = '\n'
+        else:
+            spliter = '\t'
+        i=0
+        finalValue=''
+        print valuesList
+        for val in valuesList:
+            finalValue=finalValue+spliter+variableNames[i]+' : '+str(val)
+            # print finalValue
+            i=i+1
+            # firstTime = False
+        print finalValue
+
+        return finalValue
+
+
+
+
+
+
+
+
+
+
+
+########## show Features pannel ##########
 ##Create the environment board
 rightFrame = Frame(parent, width=canvas_width,
                      height=canvas_height)
