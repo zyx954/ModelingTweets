@@ -59,10 +59,11 @@ fileNames = ['xbf', 'xbg', 'xbh', 'xbi', 'xbj']
 for filename in fileNames:
     # the filename formate is  'xbe'  'xbf'
     #======get data from file to ListDict
+
+    #manipulate  filename into  the formate as "./SplitAs90000/xbe"
+    fileName4Read = './SplitAs90000/' + filename
+    file = open(fileName4Read,"r")
     try:
-        #manipulate  filename into  the formate as "./SplitAs90000/xbe"
-        fileName4Read = './SplitAs90000/' + filename
-        file = open(fileName4Read,"r")
         lines = file.readlines()
         # print lines[0]
         # print lines[1]N
