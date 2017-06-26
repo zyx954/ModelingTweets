@@ -8,7 +8,8 @@ import traceback
 injectTweet2Mysql= InjectTweet2Mysql.injectTweet2Mysql
 # injectTweet2Mysql= TestGettingInfo.injectTweet2Mysql
 
-c = ['../xabData.pkl','../xacData.pkl','../xadData.pkl','../xaeData.pkl','../xafData.pkl' ,'../xagData.pkl' ,'../xahData.pkl' ,'../xaiData.pkl' ,'../xajData.pkl' ,'../xalData.pkl' ,'../xamData.pkl' ,'../xanData.pkl' ,'../xaoData.pkl' ,'../xapData.pkl' ,'../xaqData.pkl' ,'../xarData.pkl' ,'../xasData.pkl' ,'../xatData.pkl' ,'../xauData.pkl']
+c = ['../../xabData.pkl','../xacData.pkl','../xadData.pkl','../xaeData.pkl',
+     '../xafData.pkl' ,'../xagData.pkl' ,'../xahData.pkl' ,'../xaiData.pkl' ,'../xajData.pkl' ,'../xalData.pkl' ,'../xamData.pkl' ,'../xanData.pkl' ,'../xaoData.pkl' ,'../xapData.pkl' ,'../xaqData.pkl' ,'../xarData.pkl' ,'../xasData.pkl' ,'../xatData.pkl' ,'../xauData.pkl']
 
 for i in c:
     pkl_file = open(i, 'r')

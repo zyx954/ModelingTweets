@@ -67,9 +67,11 @@ generateFeature_Button.grid(row=1, column=2, sticky=W, padx=5, pady=5)
 DbTableName.bind('<<ComboboxSelected>>', lambda x : comboBox_DB(
     DbTableName.get()))
 
-#get DB scheme value from comboBox DB
+#TODO  get DB scheme value from comboBox DB
 def comboBox_DB( values):
     print values
+
+
 
 
 #########Combobox2 pickleFile:  select pickle file from comboBox if exist
@@ -85,12 +87,14 @@ pickleFile.grid(row=2, column=1, sticky=W, padx=5, pady=5)
 
 # get tweetsFeature*.pickle file name
 pickleFilelist = GetTweetsFeatureFiles.getTweetsFeatureFiles()
+
 # Add the tweets values
 pickleFile['values'] = tuple(pickleFilelist)
-# Set the current position
-pickleFile.current(0)
 
-# Add it to the setting panel
+# Set the current position
+# pickleFile.current(0)
+
+# bind a funciton when slect a differnt value
 pickleFile.bind('<<ComboboxSelected>>', lambda x: comboBox_pickleFile(
     pickleFile.get()))
 
@@ -105,22 +109,27 @@ def comboBox_pickleFile(values):
     #########Dynamicly Create Combobox3 tweetsID:  set Tweets ID comboBox
     tweetsIDlist, tweetsID_feature_target_Dic, tweetsID_tweets_Dic, tweetsID_user_Dic = getTweetsIDFromPickle(
         pickleFileName)
+
+    # create label
     Label(settingFrame,
           text="choose an tweets ID to check the result:",
           font=('Arial', 10)) \
         .grid(row=3, column=0, padx=5, pady=5)
 
+    # create combobox for tweetsID
     tweetsID=Combobox(settingFrame, text="tweetsID", \
                       state='readonly', font=('Courier', 10),
                       justify=LEFT)
     tweetsID.grid(row=3, column=1, sticky=W, padx=5, pady=5)
+
     # Add the tweets values
     tweetsID['values'] = tuple(tweetsIDlist)
     # if tweetsIDlist != []:
     #     # Set the current position
-    #     tweetsID.current(0)
+    # tweetsID.current(0)
 
-    # Add it to the setting panel
+
+    # bind functions to tweetsID combolist
     tweetsID.bind('<<ComboboxSelected>>', lambda x: comboBox_TweetsID(
         tweetsID.get()))
 
@@ -133,17 +142,27 @@ def comboBox_pickleFile(values):
             tweetsID['values'] = tuple(tweetsIDlist)
             if tweetsIDlist != []:
                 # Set the current position
-                tweetsID.current(0)
+                tweetsID.set(values)
         value_int= int(values)
         tweetsVariableNames = ["numberOfHashtags_c","text","hashtags_c","user",
                                "maliciousMark","id"]
         userVariableNames = ["followers_count","friends_count","description","url"]
-        featureVariableNames = ["hashtags_more_two ","exclamation_sign ","url_in_tweets ","suffix_hashtag ","spammy_hashtag ","negative_words ","upper_case_characters ","capitalized_hashtag ","Followers_followees_ratio","description","url_in_user","followers_Less_5_percentile","followees_Less_5_percentile","Percentile_of_followers"]
+        featureVariableNames = ["hashtags_more_two ","exclamation_sign ",
+                                "url_in_tweets ","suffix_hashtag ",
+                                "spammy_hashtag ","negative_words ",
+                                "upper_case_characters ","capitalized_hashtag ","Followers_followees_ratio","description","url_in_user","followers_Less_5_percentile","followees_Less_5_percentile","Percentile_of_followers","Target"]
 
+        # joint featureValue
         featureValue = tweetsID_feature_target_Dic[value_int]
         featureValue=addNamesForEachValue(featureValue,featureVariableNames)
+        print "+++++"
+        print type(featureValue)
+        print featureValue
+
+        # joint tweetValue
         tweetValue = tweetsID_tweets_Dic[value_int]
         tweetValue = addNamesForEachValue(tweetValue, tweetsVariableNames)
+        # joint userValue
         userValue  = tweetsID_user_Dic [ value_int]
         userValue = addNamesForEachValue(userValue, userVariableNames)
 
@@ -153,11 +172,15 @@ def comboBox_pickleFile(values):
         featureInfo.set(featureValue )
 
     def addNamesForEachValue(valueString,variableNames):
-        valuesList = valueString.split(',')
+        valuesList = valueString.split(',*,')
+
+        print "*****"
+        print valueString
+        print variableNames
         if len(valuesList)<10:
             spliter = '\n'
         else:
-            spliter = '\t'
+            spliter = '\n'
         i=0
         finalValue=''
         print valuesList
@@ -186,16 +209,16 @@ rightFrame = Frame(parent, width=canvas_width,
                      height=canvas_height)
 # createGrid()
 rightFrame.grid(row=1, column=0, rowspan=2)
-tweetsInfo = Label(rightFrame,
-      text="choose an tweets ID to check the result:",
-      font=('Arial', 10)) \
-    .grid(row=0, column=0, padx=5, pady=5)
-
+# tweetsInfo = Label(rightFrame,
+#       text="choose an tweets ID to check the result:",
+#       font=('Arial', 10)) \
+#     .grid(row=0, column=0, padx=5, pady=5)
+#
 
 
 
 ##tweets info
-tweetsInfo = StringVar()  # single run result
+tweetsInfo = StringVar()
 
 correspondingTweetsInfoInfo = Label(rightFrame,text="   ",
                                     textvariable=tweetsInfo,
@@ -210,7 +233,7 @@ Label(rightFrame,text="-----------------------",
     .grid(row=2, column=0, padx=5, pady=5)
 
 ######user info
-userInfo = StringVar()  # single run result
+userInfo = StringVar()
 
 correspondingUserInfo = Label(rightFrame,text="   ", textvariable=userInfo,
       font=('Arial', 13)) \
@@ -226,7 +249,7 @@ Label(rightFrame,text="-----------------------",
 
 
 ####feature Info
-featureInfo = StringVar()  # single run result
+featureInfo = StringVar()
 
 correspondingFeatureInfo = Label(rightFrame,text="   ", textvariable=featureInfo,
       font=('Arial', 13)) \

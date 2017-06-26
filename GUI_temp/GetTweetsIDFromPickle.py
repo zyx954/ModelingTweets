@@ -7,6 +7,7 @@ import Connect2Db
 #     f = open('../generateFeature/tweetsFeatureData.pkl', 'rb')
 #     return f
 
+
 def getTweetsIDFromPickle(pickleFileName):
     #get 10 tweets id and return a id  list and a dic (id:feature str ) and
     # a dic ( id: tweets) and anoher dic (id : user)
@@ -28,10 +29,10 @@ def getTweetsIDFromPickle(pickleFileName):
             for i in range(1,500,50):
                 # if(target[i]!=0):
                 tweetsIDlist.append(tweetsID[i])
-                tweetsID_feature_target_Dic[tweetsID[i]] = str(data[i]) +"  " \
-                                                                         "target:  " \
-                                                                         ""+ str(target[i])
-                print(tweetsID_feature_target_Dic[tweetsID[i]])
+                featureData = ",*,".join(str(x) for x in data[i])
+                tweetsID_feature_target_Dic[tweetsID[i]] = featureData +",*,"+ str(target[i])
+                print "tweetsID_feature_target_Dic[tweetsID[i]] is  : " + \
+                      tweetsID_feature_target_Dic[tweetsID[i]]
                 cursor.execute("select  numberOfHashtags_c,"
                                                    "text,hashtags_c, "
                                 "user  ,"
@@ -43,7 +44,7 @@ def getTweetsIDFromPickle(pickleFileName):
                 print tweetsTableResult
                 userId = tweetsTableResult[3]
                 # print userId
-                tweetStr = ",   ".join(str(x) for x in tweetsTableResult)
+                tweetStr = ",*,".join(str(x) for x in tweetsTableResult)
                 tweetsID_tweets_Dic[tweetsID[i]] = tweetStr
 
 
@@ -54,7 +55,7 @@ def getTweetsIDFromPickle(pickleFileName):
                 Result = cursor.fetchall()
 
                 userTableResult = Result[0]
-                userStr = ",   ".join(str(x) for x in userTableResult)
+                userStr = ",*,".join(str(x) for x in userTableResult)
                 tweetsID_user_Dic[tweetsID[i]] = userStr
                 print userTableResult
         else:
