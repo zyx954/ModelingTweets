@@ -4,15 +4,20 @@ from sklearn.metrics import confusion_matrix
 
 
 def DT(criterion,max_features,class_weight):
-    # get  data(dictionar) from pickle
+    # ###############3get  data(dictionar) from pickle###########
     output_data = open('data_pickle.pkl', 'rb')
     output_target = open('target_pickle.pkl', 'rb')
+    output_IDs = open('IDs_pickle.pkl', 'rb')
+
 
     data_dic = pickle.load(output_data)
     target_dic = pickle.load(output_target)
+    IDs_dic = pickle.load(output_IDs)
+
 
     output_data.close()
     output_target.close()
+    output_IDs.close()
 
     #data
     train_data = data_dic["train_data"]
@@ -24,15 +29,24 @@ def DT(criterion,max_features,class_weight):
     validation_target = target_dic["validation_target"]
     test_target = target_dic["test_target"]
 
+    # IDs
+    train_IDs = IDs_dic["train_IDs"]
+    validation_IDs = IDs_dic["validation_IDs"]
+    test_IDs = IDs_dic["test_IDs"]
+
+    print test_data[1]
+    print "#########"
     print train_data.shape, validation_data.shape, test_data.shape
     print train_target.shape, validation_target.shape, test_target.shape
 
+
+    # ########### DT Parameters ##########
     #variables for classifiers from differnt parameters/models and its score
     classifiers = []
     parameters = []
     scores = []
 
-
+    # #######Training based on selected parameters
     # build DT classifiers <--via different parameters
     # for criterion in ['gini', 'entropy']:
     #     for max_features in ['sqrt','log2', 'auto',None]:
@@ -52,7 +66,7 @@ def DT(criterion,max_features,class_weight):
     # parameters.append(paremeter+"score: -->")
     # scores.append(score)
 
-    #evaluation
+    ###### evaluation
     #<choose the best parameter --> test on the test_data and test_target>
     # max_score_index = scores.index(max(scores))
     # clf = classifiers[max_score_index]
@@ -62,14 +76,23 @@ def DT(criterion,max_features,class_weight):
     print "score: -->",score
 
 
+    # Get predicted Results & combine with ID& Actual results
+    clf_pred = clf.predict(test_data)
+    print type(clf_pred), len(clf_pred)
+    i=0
+    combinedResultOnActualAndPred=[]
+    for predictResult in clf_pred:
+        combinedResultOnActualAndPred.append( str(
+            train_IDs[i] )+"\t"+ str(train_target[i]
+                                                                         )+"\t"+ str(predictResult )+"\r\n")
+        i=i+1
+
     #print confusing matrix
-    clf_pred= clf.predict(test_data)
-    print
     print "confusion matrix: "
     print confusion_matrix(test_target, clf_pred,labels=[-1,0,1])
     DTconfusion_matrix= confusion_matrix(test_target, clf_pred,labels=[-1,0,1])
     percision, recall = calculatePercisionAndRecall(DTconfusion_matrix)
-    return DTconfusion_matrix,percision, recall
+    return DTconfusion_matrix,percision, recall,combinedResultOnActualAndPred
 
 def calculatePercisionAndRecall(DTconfusion_matrix):
     print DTconfusion_matrix[0][2]
