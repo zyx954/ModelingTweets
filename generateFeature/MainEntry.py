@@ -29,7 +29,9 @@ def mainEntry():
         data=[]
         target=[]
         tweetsID=[]
+        print "*****"
         db, cursor = Connect2Db.connect_db()
+        print "#####"
         metadataFromTweets= GettingAllRelatedVarsFromDBTweets(db,
                                                                           cursor,0)
         followers_count_list, percentile5_OnFollower, percentile5_OnFollowee = \

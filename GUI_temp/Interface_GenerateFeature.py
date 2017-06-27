@@ -6,8 +6,8 @@ import GetTweetsIDFromPickle
 import GetTweetsFeatureFiles
 import Interface_Training as  Interface_Training
 import Interface_Training_NFolder as Interface_Training_NFolder
-
-
+from DataInjection.generateFeature import MainEntry
+# import
 
 
 
@@ -61,9 +61,22 @@ DbTableName.current(0)
 # Add it to the setting panel
 DbTableName.grid(row=1, column=1, sticky=W, padx=5, pady=5)
 
-# TODO: generateFeature_Button needs links to getFeature function.
+# generateFeature_Button needs links to getFeature function.
 generateFeature_Button = Button(settingFrame,text = "GetFeature")
 generateFeature_Button.grid(row=1, column=2, sticky=W, padx=5, pady=5)
+generateFeature_Button.config(command = (lambda: generateFeature_Function()))
+
+def generateFeature_Function():
+    pass
+    MainEntry.mainEntry()
+
+DbTableName.get()
+
+
+# get DB scheme value from comboBox DB
+def comboBox_DB( values):
+    print values
+
 
 
 ##### Redirect to TrainingGUI Button ####
@@ -92,9 +105,6 @@ TrainingGUI_NFolder.config(command = (lambda: RedirectToTrainingGUI_NFloder()))
 DbTableName.bind('<<ComboboxSelected>>', lambda x : comboBox_DB(
     DbTableName.get()))
 
-#TODO  get DB scheme value from comboBox DB
-def comboBox_DB( values):
-    print values
 
 
 

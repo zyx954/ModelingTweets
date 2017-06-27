@@ -1,7 +1,13 @@
-
+import os
 def gettingNegativeWords(verbose=1):
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    print dir_path
+    path = dir_path+ "/NEGATIVE_opinion_words"
     try:
-        file = open("NEGATIVE_opinion_words")
+        file = open(path)
+        # file = open("./NEGATIVE_opinion_words")
+
         # lines = file.readlines()
         lines = file.read().splitlines()
         NEGATIVE_opinion_words = set(lines)
