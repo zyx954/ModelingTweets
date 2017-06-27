@@ -60,21 +60,24 @@ def svm_training(kernal, loss, class_weight):
     clf.fit(train_data, train_target)
     #store classifier with particular paramters and its score into sperately list
     parameter = "loss: " +str(loss) + "; class_weight: " + str(class_weight)
-    score = clf.score(validation_data,validation_target)
-    classifiers.append(clf)
-    parameters.append(parameter)
-    scores.append(score)
-    print parameter + "---->score: " + str(score)
+
+
+    # Validation
+    # score = clf.score(validation_data,validation_target)
+    # classifiers.append(clf)
+    # parameters.append(parameter)
+    # scores.append(score)
+    # print parameter + "---->score: " + str(score)
 
 
     #evaluation
     #<choose the best parameter --> test on the test_data and test_target>
-    max_score_index = scores.index(max(scores))
-    clf = classifiers[max_score_index]
-    paremeter = parameters[max_score_index]
+    # max_score_index = scores.index(max(scores))
+    # clf = classifiers[max_score_index]
+    # paremeter = parameters[max_score_index]
     score = clf.score(test_data, test_target)
     print "Last evaluation on the best score from validation"
-    print paremeter,"score: -->",score
+    print "score: -->",score
 
 
     #print confusing matrix

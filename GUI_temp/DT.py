@@ -44,22 +44,22 @@ def DT(criterion,max_features,class_weight):
     # Train data based on the parameters
     clf.fit(train_data, train_target)
 
-    #validation
-    score = clf.score(validation_data,validation_target)
-    paremeter = "criterion: " +str(criterion)+ "; max_features: "+str(max_features) + "; class_weight: " + str(class_weight)
-    print paremeter,"score: -->",score
-    classifiers.append(clf)
-    parameters.append(paremeter+"score: -->")
-    scores.append(score)
+    # #validation
+    # score = clf.score(validation_data,validation_target)
+    # paremeter = "criterion: " +str(criterion)+ "; max_features: "+str(max_features) + "; class_weight: " + str(class_weight)
+    # print paremeter,"score: -->",score
+    # classifiers.append(clf)
+    # parameters.append(paremeter+"score: -->")
+    # scores.append(score)
 
     #evaluation
     #<choose the best parameter --> test on the test_data and test_target>
-    max_score_index = scores.index(max(scores))
-    clf = classifiers[max_score_index]
-    paremeter = parameters[max_score_index]
+    # max_score_index = scores.index(max(scores))
+    # clf = classifiers[max_score_index]
+    # paremeter = parameters[max_score_index]
     score = clf.score(test_data, test_target)
     print "Last evaluation on the best score from validation"
-    print paremeter,"score: -->",score
+    print "score: -->",score
 
 
     #print confusing matrix

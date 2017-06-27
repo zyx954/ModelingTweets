@@ -14,12 +14,12 @@ def test(trainingPercentage,
     print boardTwoOnDataset
     print "hee "
 def dataProcess(trainingPercentage,
-                       validationPercentage,testingPercentage):
+                       validationPercentage,testingPercentage,pickleFileName):
     #get data and target
     try:
         print "####enter dataPrecess before f "
-        # print os.getcwd()
-        f = open('./tweetsFeatureData.pkl', 'rb')
+        # f = open('./tweetsFeatureData.pkl', 'rb')
+        f = open('./' + pickleFileName + '.pkl', 'rb')
         print "enter dataPrecess"
 
         data = pickle.load(f)
