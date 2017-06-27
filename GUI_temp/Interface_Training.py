@@ -223,7 +223,7 @@ Label(fixed_board, text="class_weight:  ") \
 SVMClass_weight = Combobox(fixed_board, text="SVMClass_weight", \
                            state='readonly', font=('Courier', 10),
                            justify=LEFT)
-SVMClass_weight['values'] = ('balanced',None)
+SVMClass_weight['values'] = ('balanced')
 SVMClass_weight.current(0)
 SVMClass_weight.grid(row=4, column=3, padx=5, pady=5, sticky=W)
 
@@ -264,6 +264,8 @@ Label(setting_up, text="   ", textvariable=filepathForPredictedResult,
 
 
 
+#
+
 ########Training On DT button ##########
 def TrainingOnDT():
     global filenameForTrainingResult,filenameForPredictedResult,\
@@ -289,6 +291,8 @@ def TrainingOnDT():
     spamRow.set(strOnSpamRow)
     PercisionRow.set(strOnPercisionRow)
     recallRow.set(strOnRecallRow)
+
+
 
     # ####write Condussion result into file
     print filenameForTrainingResult
@@ -346,7 +350,8 @@ TrainingOnDT).grid(row=8,
 def TrainingOnSVM():
     global filenameForTrainingResult,filenameForPredictedResult,SVMLoss,SVMClass_weight,SVMKernel,unknowRow,hamRow,spamRow,PercisionRow,recallRow
     # here for presentation all use liner kernel
-    SVMconfusion_matrix, percision, recall = SVM_training.svm_training(SVMKernel.get(), SVMLoss.get(),
+    SVMconfusion_matrix, percision, recall,combinedResultOnActualAndPred = SVM_training.svm_training(
+        SVMKernel.get(), SVMLoss.get(),
                                           SVMClass_weight.get())
     print SVMconfusion_matrix, percision, recall
     strOnUnknowRow = "unknown:            " + "            ".join(str(x) for x
@@ -363,6 +368,55 @@ def TrainingOnSVM():
     spamRow.set(strOnSpamRow)
     PercisionRow.set(strOnPercisionRow)
     recallRow.set(strOnRecallRow)
+
+
+
+    # ####write Condussion result into file
+    print filenameForTrainingResult
+
+    if (filenameForTrainingResult == ''):
+        pass
+    else:
+        fileOnTrainingResult = open(filenameForTrainingResult, 'w')
+        try:
+            fileOnTrainingResult.write("The result of confusion matrix")
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write("             predicted           ")
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write("                     unknown    ham    spam")
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write(strOnUnknowRow)
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write(strOnHamRow)
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write(strOnSpamRow)
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write(strOnPercisionRow)
+            fileOnTrainingResult.write('\r\n')
+            fileOnTrainingResult.write(strOnRecallRow)
+        finally:
+            fileOnTrainingResult.close()
+
+
+    # ###Write ID --Actual result --Predicted resutl into file
+    print filenameForPredictedResult
+    if(filenameForPredictedResult==''):
+        pass
+    else:
+        fileOnIndividualResult = open(filenameForPredictedResult, 'w')
+        fileOnIndividualResult.write("   SVM  \r\n")
+        fileOnIndividualResult.write("     ID           "
+                                     "\tActual\tPredicted\r\n")
+        try:
+            for i in combinedResultOnActualAndPred:
+                fileOnIndividualResult.write(i)
+            # fileOnIndividualResult.write('\r\n')
+
+        finally:
+            fileOnIndividualResult.close()
+
+
+
 
     pass
 

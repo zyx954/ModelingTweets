@@ -71,9 +71,9 @@ def DT(criterion,max_features,class_weight):
     # max_score_index = scores.index(max(scores))
     # clf = classifiers[max_score_index]
     # paremeter = parameters[max_score_index]
-    score = clf.score(test_data, test_target)
-    print "Last evaluation on the best score from validation"
-    print "score: -->",score
+    # score = clf.score(test_data, test_target)
+    # print "Last evaluation on the best score from validation"
+    # print "score: -->",score
 
 
     # Get predicted Results & combine with ID& Actual results
@@ -89,8 +89,9 @@ def DT(criterion,max_features,class_weight):
 
     #print confusing matrix
     print "confusion matrix: "
-    print confusion_matrix(test_target, clf_pred,labels=[-1,0,1])
     DTconfusion_matrix= confusion_matrix(test_target, clf_pred,labels=[-1,0,1])
+    print DTconfusion_matrix
+
     percision, recall = calculatePercisionAndRecall(DTconfusion_matrix)
     return DTconfusion_matrix,percision, recall,combinedResultOnActualAndPred
 
