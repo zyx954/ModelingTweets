@@ -33,6 +33,15 @@ def dataProcess(trainingPercentage,
         print IDs[1]
         # print test.shape
 
+        i=0
+        for id in IDs:
+            if(id == 330029892479639553):
+                print "this is target *****" + str(i)
+                print str(data[i])
+                print IDs[i]
+                print "********end ****"
+            i=i+1
+
 
         #shufflers(needs to match the data and target)
         r = np.random.permutation(len(target))
