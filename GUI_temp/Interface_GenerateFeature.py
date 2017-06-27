@@ -4,6 +4,8 @@ from Tkinter import *
 from ttk import *
 import GetTweetsIDFromPickle
 import GetTweetsFeatureFiles
+import Interface_Training as  Interface_Training
+import Interface_Training_NFolder as Interface_Training_NFolder
 
 
 
@@ -64,6 +66,29 @@ generateFeature_Button = Button(settingFrame,text = "GetFeature")
 generateFeature_Button.grid(row=1, column=2, sticky=W, padx=5, pady=5)
 
 
+##### Redirect to TrainingGUI Button ####
+def RedirectToTrainingGUI():
+    pass
+    print "new Training GUI"
+    Interface_Training.Training_main()
+
+TrainingGUI =Button(settingFrame,text = "TrainingGUI")
+TrainingGUI.grid(row=1, column=3, sticky=W, padx=5, pady=5)
+TrainingGUI.config(command = (lambda: RedirectToTrainingGUI()))
+
+
+
+##### Redirect to TrainingGUI_NFolder  Button ####
+def RedirectToTrainingGUI_NFloder():
+    pass
+    Interface_Training_NFolder.Training_main()
+
+TrainingGUI_NFolder =Button(settingFrame,text = "TrainingGUI_NFolder")
+TrainingGUI_NFolder.grid(row=2, column=3, sticky=W, padx=5, pady=5)
+TrainingGUI_NFolder.config(command = (lambda: RedirectToTrainingGUI_NFloder()))
+
+
+# select Pickle files
 DbTableName.bind('<<ComboboxSelected>>', lambda x : comboBox_DB(
     DbTableName.get()))
 
