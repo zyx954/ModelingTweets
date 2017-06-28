@@ -139,6 +139,8 @@ def Training_main():
 
     partitioningDataButton = Button(setting_up, text="Partitioning DataSet")
     partitioningDataButton.grid(row=4, column=1, padx=5, pady=5)
+    partitioningDataButton.config(command=partitioningData)
+
     ###############
 
 
