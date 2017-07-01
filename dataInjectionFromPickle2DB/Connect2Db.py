@@ -9,3 +9,4 @@ def connect_db():
     # db, cursor = connect_db()
     # cursor.execute("SELECT * FROM Tweets ;")
     # data = cursor.fetchone()
+
