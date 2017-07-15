@@ -3,20 +3,17 @@
 A software system to Modelling spam tweets
 
 
-## Related Package
+## Related Packages
 
-Five packages reltated :
+[Twitter](http://mike.verdone.ca/twitter/#install) :`Pip install twitter`
 
-Twitter :`Pip install twitter`
+[SciPy](https://www.scipy.org/): `Pip install SciPy`
 
-SciPy: `Pip install SciPy`
+[MysqlDB](http://mysql-python.sourceforge.net/MySQLdb.html): `Pip install MysqlDB`
 
-MysqlDB: `Pip install MysqlDB`
+[Numpy](http://www.numpy.org/): `Pip install Numpy`
 
-Numpy: `Pip install Numpy`
-
-Sklearn: `Pip install Sklearn`
-
+[Sklearn](http://scikit-learn.org/): `Pip install Sklearn`
 ## Project functions
 
 ### Data collection
@@ -62,7 +59,7 @@ There are three interfaces:
 
 #### Usage
 
-**Interface_GenerateFeature:**
+**1. Interface_GenerateFeature:**
 * GetFeature Button will call a function to generate feature in generateFeature Folders
 	* The features will store into a text file called "tweetsFeatureData.pkl"
 * Move "tweetsFeatureData.pkl" file into GUI_temp Folders
@@ -70,7 +67,7 @@ There are three interfaces:
 * Then, 10 tweets ID will be available in a dropdown list.
 * The feature information will be demonstrated after choosing a tweet ID.
 
-**Interface_Training.py:**
+**2. Interface_Training.py:**
 * Data partitioning
 	* Choose a tweet feature file like “tweetsFeatureData.pkl” in drop down list
 	* Set Training data and test data ratio.
@@ -87,7 +84,7 @@ There are three interfaces:
 		* The confusion matrix result will be demonstrated in both GUI and exported to the specified file path
 		* The Predicted result will be export the specified file path
 
-**Interface_Training_NFolder.py:**
+**3. Interface_Training_NFolder.py:**
 * Model Training
 	* Choose a tweet feature file like “tweetsFeatureData.pkl” in drop down list
 	* Set numbers of folder
