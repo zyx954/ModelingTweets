@@ -4,7 +4,7 @@ A software system to Modelling spam tweets
 
 
 ## Related Packages
-###Packages
+### Packages
 * [Twitter](http://mike.verdone.ca/twitter/#install) 
 * [SciPy](https://www.scipy.org/)
 * [MysqlDB](http://mysql-python.sourceforge.net/MySQLdb.html)
