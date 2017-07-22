@@ -4,16 +4,16 @@ A software system to Modelling spam tweets
 
 
 ## Related Packages
+###Packages
+* [Twitter](http://mike.verdone.ca/twitter/#install) 
+* [SciPy](https://www.scipy.org/)
+* [MysqlDB](http://mysql-python.sourceforge.net/MySQLdb.html)
+* [Numpy](http://www.numpy.org/)
+* [Sklearn](http://scikit-learn.org/)
 
-[Twitter](http://mike.verdone.ca/twitter/#install) :`Pip install twitter`
+### setup working environment 
+`pip install -r stable-req.txt`
 
-[SciPy](https://www.scipy.org/): `Pip install SciPy`
-
-[MysqlDB](http://mysql-python.sourceforge.net/MySQLdb.html): `Pip install MysqlDB`
-
-[Numpy](http://www.numpy.org/): `Pip install Numpy`
-
-[Sklearn](http://scikit-learn.org/): `Pip install Sklearn`
 ## Project functions
 
 ### Data collection
