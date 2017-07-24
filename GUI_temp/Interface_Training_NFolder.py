@@ -69,7 +69,7 @@ pickleFile.bind('<<ComboboxSelected>>', lambda x: comboBox_pickleFile(
 
 #get tweets ID value from comboBox TweetsID
 def comboBox_pickleFile(values):
-    # global pickleFileName
+    global pickleFileName
     print values
     pickleFileName = values
 
