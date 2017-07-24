@@ -231,7 +231,7 @@ Label(fixed_board, text="SVM parameters ") \
 
 ############set PathForTrainingResult########
 def FilePathForResult():
-    # global filepathForTrainingResult,filenameForTrainingResult
+    global filepathForTrainingResult,filenameForTrainingResult
     filenameForTrainingResult = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
     filepathForTrainingResult.set(filenameForTrainingResult)
 
