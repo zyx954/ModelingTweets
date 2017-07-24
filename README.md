@@ -60,6 +60,9 @@ There are three interfaces:
 #### Usage
 
 **1. Interface_GenerateFeature:**
+![image](https://user-images.githubusercontent.com/16515626/28506263-65145740-706d-11e7-98c3-09227f5220d1.png)
+
+
 * GetFeature Button will call a function to generate feature in generateFeature Folders
 	* The features will store into a text file called "tweetsFeatureData.pkl"
 * Move "tweetsFeatureData.pkl" file into GUI_temp Folders
@@ -68,6 +71,8 @@ There are three interfaces:
 * The feature information will be demonstrated after choosing a tweet ID.
 
 **2. Interface_Training.py:**
+![image](https://user-images.githubusercontent.com/16515626/28506200-f8aacf62-706c-11e7-9cae-f1828daf4f52.png)
+
 * Data partitioning
 	* Choose a tweet feature file like “tweetsFeatureData.pkl” in drop down list
 	* Set Training data and test data ratio.
@@ -83,8 +88,13 @@ There are three interfaces:
 	* Click button on DT or SVM
 		* The confusion matrix result will be demonstrated in both GUI and exported to the specified file path
 		* The Predicted result will be export the specified file path
+			![image](https://user-images.githubusercontent.com/16515626/28506488-2d9be272-706f-11e7-94c0-cd4d2a2b94b7.png)
+			![image](https://user-images.githubusercontent.com/16515626/28506275-85ac01b0-706d-11e7-85d9-9c6bd99f6ade.png)
 
 **3. Interface_Training_NFolder.py:**
+![image](https://user-images.githubusercontent.com/16515626/28506383-5274eeaa-706e-11e7-9155-f0f313b48305.png)
+
+
 * Model Training
 	* Choose a tweet feature file like “tweetsFeatureData.pkl” in drop down list
 	* Set numbers of folder
@@ -92,3 +102,5 @@ There are three interfaces:
 	* Choose a file path for predicted result
 	* Click button on DT or SVM
 		* The Predicted result will be export the specified file 
+			![image](https://user-images.githubusercontent.com/16515626/28506443-e0e279f0-706e-11e7-9f54-8482b4241d5b.png)
+
